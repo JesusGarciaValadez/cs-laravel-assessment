@@ -13,7 +13,8 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $this->notifyManager($user, 'created');
+        Mail::to($user->email)
+            ->queue(new UserChangesNotificationMail());
     }
 
     /**
@@ -21,7 +22,8 @@ class UserObserver
      */
     public function updated(User $user): void
     {
-        $this->notifyManager($user, 'updated');
+        Mail::to('manager@controlfreak.com')
+            ->queue(new UserChangesNotificationMail());
     }
 
     /**
@@ -29,7 +31,7 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        $this->notifyManager($user, 'deleted');
+        // TODO send the UserDeletedNotificationMail to the user
     }
 
     /**
@@ -37,7 +39,6 @@ class UserObserver
      */
     public function restored(User $user): void
     {
-        $this->notifyManager($user, 'restored');
     }
 
     /**
@@ -45,14 +46,6 @@ class UserObserver
      */
     public function forceDeleted(User $user): void
     {
-        $this->notifyManager($user, 'force-deleted');
     }
 
-    private function notifyManager(User $user, string $string)
-    {
-        $message = (new UserChangesNotificationMail());
-
-        Mail::to('controlfreak@manager.com')
-            ->queue($message);
-    }
 }

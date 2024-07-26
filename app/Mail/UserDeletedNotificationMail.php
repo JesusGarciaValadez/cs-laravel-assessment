@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class UserChangesNotificationMail extends Mailable
+class UserDeletedNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -23,7 +23,7 @@ class UserChangesNotificationMail extends Mailable
 
     public function build()
     {
-        return $this->subject('User Changes Notification Mail')
-            ->html('<p>Well manager, something happened to a user.</p>'); // Uncomment to use HTML content directly
+        return $this->subject('Your account has been deleted')
+            ->html('<p>Bye Bye.</p>');
     }
 }
