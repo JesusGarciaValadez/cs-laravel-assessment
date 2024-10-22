@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TodoModelTest extends TestCase
 {
-    public function testTheUserExistsOnAModel()
+    public function testThatATodoCanNeverBeCreatedWithoutAnExistingUser()
     {
         $this->expectExceptionCode(23000);
         Todo::factory()->create([
