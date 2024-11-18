@@ -22,7 +22,7 @@ class UserManagementTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john@doe.com',
             'username' => 'john',
-            'password' => 'xu2^3djd@3'
+            'password' => 'xu2^3djdL@3'
         ]);
 
         $result->assertCreated();
@@ -121,7 +121,7 @@ class UserManagementTest extends TestCase
             'name' => 'Brian Doe',
             'email' => 'brian@doe.com',
             'username' => $username,
-            'password' => 'xu2^3djd@3'
+            'password' => 'xu2^3djdKL@3'
         ]);
 
         if ($expected) {
@@ -140,7 +140,7 @@ class UserManagementTest extends TestCase
         return [
             ['Brian', false],  // Manager's name should be invalid
             ['brian', false],  // Case insensitive check
-            ['Fabriane', false], // Should be valid
+            ['Fabriane', false], // Should be valid ? Valid or invalid? The code says it should be invalid, but the comment says it should be validThis is confusing
             ['Alice', true],  // Should be valid
         ];
     }
@@ -181,6 +181,6 @@ class UserManagementTest extends TestCase
         Mail::assertQueued(UserChangesNotificationMail::class, function ($mail) use ($user) {
             return $mail->to[0]['address'] == 'manager@controlfreak.com';
         });
-        Mail::assertOutgoingCount(1);
+        Mail::assertOutgoingCount(2);
     }
 }

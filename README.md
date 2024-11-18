@@ -17,5 +17,5 @@ touch database/database.sqlite
 
 Run tests
 ```bash
-php artisan tests
+php artisan test
 ```

@@ -19,6 +19,8 @@ class TodoController extends Controller
 
     public function update(Todo $todo, Request $request)
     {
-        // TODO implement the update of the the todo itself to set the completed status to true
+        Gate::authorize('update', $todo);
+        $todo->update($request->all());
+        return $todo;
     }
 }

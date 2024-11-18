@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRegistrationRequest extends FormRequest
 {
@@ -23,9 +24,18 @@ class UserRegistrationRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
-            'email' => 'required|email',
-            'username' => 'required|min:4',
-            'password' => 'required|min:8'
+            'email' => [
+                'required',
+                'email',
+                Rule::notIn(['manager@controlfreak.com']),
+            ],
+            'username' => [
+                'required',
+                'min:4',
+                'unique:users,username',
+                'not_regex:/(brian)/i',
+            ],
+            'password' => 'required|min:10|regex:/[A-Z]/|regex:/[a-z]/|regex:/[0-9]/|regex:/[@$!%^*#?&]/',
         ];
     }
 }

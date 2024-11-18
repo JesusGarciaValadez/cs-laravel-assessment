@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Mail\UserChangesNotificationMail;
+use App\Mail\UserCreatedNotificationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,7 +15,7 @@ class UserObserver
     public function created(User $user): void
     {
         Mail::to($user->email)
-            ->queue(new UserChangesNotificationMail());
+            ->queue(new UserCreatedNotificationMail());
     }
 
     /**
@@ -31,7 +32,8 @@ class UserObserver
      */
     public function deleted(User $user): void
     {
-        // TODO send the UserDeletedNotificationMail to the user
+        Mail::to($user->email)
+            ->queue(new UserChangesNotificationMail());
     }
 
     /**

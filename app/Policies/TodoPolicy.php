@@ -10,7 +10,7 @@ class TodoPolicy
 
     public function view(User $user, Todo $todo): bool
     {
-        return true;
+        return $user->id === $todo->user_id;
     }
 
     public function update(User $user, Todo $todo): bool
